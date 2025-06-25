@@ -1,0 +1,19 @@
+{
+  "name": "to-do-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:mobile": "npx playwright test tests/add-todo.spec.ts --project=mobile --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.53.1",
+    "@types/node": "^24.0.4"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.8.0"
+  }
+}
