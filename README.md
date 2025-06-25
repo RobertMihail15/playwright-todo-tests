@@ -6,6 +6,7 @@ Automated UI tests written in Playwright for the [TodoMVC](https://todomvc.com/e
 
 - `page-objects/`: Contains `PageManager` and `TodoPage` classes
 - `tests/`: Contains test files organized by feature (add, delete, filter, etc.)
+-  Mobile testing (iPhone 13 Pro viewport)
 
 ## Technologies Used
 
