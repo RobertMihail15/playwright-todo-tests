@@ -7,7 +7,7 @@ export class TodoPage{
         this.page = page
     }
 
-      get toDoInput(){
+    get toDoInput(){
         return this.page.getByRole('textbox', {name: 'What needs to be done?'})
     }
 
@@ -15,7 +15,7 @@ export class TodoPage{
         return this.page.locator('[data-testid="todo-item"]')
     }
 
-    get deleteItem(){
+    get deleteItemButton(){
         return this.page.locator('.destroy')
     }
 
@@ -37,6 +37,10 @@ export class TodoPage{
     
     get completedFilter(){
         return this.page.getByRole('link', { name: 'Completed' })
+    }
+
+     get tasksCount(){
+        return this.page.locator('[class="todo-count"]')
     }
 
     async checkAllFilter(count: number){
@@ -65,7 +69,7 @@ export class TodoPage{
          await this.page.keyboard.press('Enter')
     }
 
-    async addASingleItemToList(item: string){
+    async submitOneItem(item: string){
         await this.toDoInput.fill(item)
         await this.pressEnterOnKeyboard()
     }
@@ -76,5 +80,26 @@ export class TodoPage{
         await this.editItemInput.clear()
         await this.editItemInput.fill(item)
         await this.pressEnterOnKeyboard()
+    }
+
+     async submitMultipleItems(taskList) {
+        for (const task of taskList) {
+            await this.submitOneItem(task);
+        }
+    }   
+
+    async checkAllBoxesToBeChecked(){
+        const allBoxes = this.checkButton
+        for(const box of await allBoxes.all()){
+            await box.check({force:true})
+            expect(await box.isChecked()).toBeTruthy()
+          }
+          const count = await this.toDoItem.count();
+
+        for (let i = 0; i < count; i++) {
+            const item = this.toDoItem.nth(i);
+            await expect(item).toContainClass('completed');
+        }
+
     }
 }

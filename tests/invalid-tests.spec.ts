@@ -15,13 +15,13 @@ test.beforeEach(async({page})=>{
 test('add empty task', async({page})=>{
   const pm = new PageManager(page)
   await pm.submitOneItem('')
-  await expect(pm.toDoItem).not.toBeVisible() 
+  await expect(pm.todo.toDoItem).not.toBeVisible() 
 })
 
 test('add only spaces', async({page})=>{
   const pm = new PageManager(page)
   await pm.submitOneItem('           ')
-  await expect(pm.toDoItem).not.toBeVisible() 
+  await expect(pm.todo.toDoItem).not.toBeVisible() 
 })
 
 test('add a very long string', async({page})=>{
@@ -29,13 +29,13 @@ test('add a very long string', async({page})=>{
   const longTask = 'a'.repeat(1000);
   await pm.submitOneItem(longTask);
   await pm.submitOneItem(longTask); 
-  await expect(pm.toDoItem).toHaveCount(2);
-  await expect(pm.toDoItem.first()).toHaveText(longTask);
+  await expect(pm.todo.toDoItem).toHaveCount(2);
+  await expect(pm.todo.toDoItem.first()).toHaveText(longTask);
 })
 
 test('add special symbols', async({page})=>{
   const pm = new PageManager(page)
   await pm.submitOneItem('@@##!!@@')
-  await expect(pm.toDoItem).toBeVisible() 
+  await expect(pm.todo.toDoItem).toBeVisible() 
 })
 

@@ -16,9 +16,9 @@ test.beforeEach(async({page})=>{
 test('add a single task and delete it', async({page})=>{
   const pm = new PageManager(page)
   await pm.submitOneItem(newTask)
-  await expect(pm.toDoItem).toBeVisible()
-  await pm.toDoItem.hover()
-  await pm.deleteItemButton.click()
+  await expect(pm.todo.toDoItem).toBeVisible()
+  await pm.todo.toDoItem.hover()
+  await pm.todo.deleteItemButton.click()
   
 })
 
@@ -26,20 +26,20 @@ test('add multiple tasks and delete them', async({page})=>{
   const pm = new PageManager(page)
   
   await pm.submitMultipleItems(randomTasks)
-  while (await pm.toDoItem.count() > 0) {
-    await pm.toDoItem.first().hover();
-    await pm.deleteItemButton.first().click();
+  while (await pm.todo.toDoItem.count() > 0) {
+    await pm.todo.toDoItem.first().hover();
+    await pm.todo.deleteItemButton.first().click();
   }
 })
 
 test('check a single task', async({page})=>{
    const pm = new PageManager(page)
    await pm.submitOneItem(newTask)
-   await pm.checkButton.check({force: true})
-   expect(pm.checkButton).toBeChecked()
-   await expect(pm.toDoItem).toContainClass('completed')
-   await pm.checkButton.uncheck({force: true})
-   expect(pm.checkButton).not.toBeChecked()
+   await pm.todo.checkButton.check({force: true})
+   expect(pm.todo.checkButton).toBeChecked()
+   await expect(pm.todo.toDoItem).toContainClass('completed')
+   await pm.todo.checkButton.uncheck({force: true})
+   expect(pm.todo.checkButton).not.toBeChecked()
 })
 
 test('check multiple tasks', async({page})=>{
@@ -53,7 +53,7 @@ test('edit-todo', async({page})=>{
   const pm = new PageManager(page)
   await pm.submitOneItem(newTask)
   await pm.submitEditToDoItem('new task')
-  await expect(pm.toDoItem).toBeVisible()
+  await expect(pm.todo.toDoItem).toBeVisible()
 })
 
 test('filter-todo: all, active, completed', async({page})=>{
@@ -62,7 +62,7 @@ test('filter-todo: all, active, completed', async({page})=>{
   await page.waitForTimeout(2000)
   for(let i=0; i<randomTasks.length;i++){
     if(Math.random()<0.5){
-      await pm.checkButton.nth(i).check();
+      await pm.todo.checkButton.nth(i).check();
     }
   }
 
@@ -76,11 +76,11 @@ test('counter items', async({page})=>{
   await pm.submitMultipleItems(randomTasks)
 
   await pm.checkAllFilter(randomTasks.length)
-  await expect(pm.tasksCount).toHaveText(`${randomTasks.length} items left!`);
-  await pm.checkButton.first().click()
-  await expect(pm.tasksCount).toHaveText(`${randomTasks.length-1} items left!`);
-  await pm.checkButton.first().click()
-  await expect(pm.tasksCount).toHaveText(`${randomTasks.length} items left!`);
+  await expect(pm.todo.tasksCount).toHaveText(`${randomTasks.length} items left!`);
+  await pm.todo.checkButton.first().click()
+  await expect(pm.todo.tasksCount).toHaveText(`${randomTasks.length-1} items left!`);
+  await pm.todo.checkButton.first().click()
+  await expect(pm.todo.tasksCount).toHaveText(`${randomTasks.length} items left!`);
 
 
 })

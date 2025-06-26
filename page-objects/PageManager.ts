@@ -10,35 +10,12 @@ export class PageManager{
         this.todoPage = new TodoPage(this.page)
     }
 
+    get todo() {
+        return this.todoPage;
+    }
+
     submitOneItem(item:string){
-        return this.todoPage.addASingleItemToList(item)
-    }
-
-    get deleteItemButton(){
-        return this.todoPage.deleteItem
-    }
-    get toDoItem(){
-        return this.todoPage.toDoItem
-    }
-
-    get checkButton(){
-        return this.todoPage.checkButton
-    }
-
-    get allFilter(){
-        return this.todoPage.allFilter
-    }
-
-    get activeFilter(){
-        return this.todoPage.activeFilter
-    }
-    
-    get completedFilter(){
-        return this.todoPage.completedFilter
-    }
-
-    get tasksCount(){
-        return this.page.locator('[class="todo-count"]')
+        return this.todoPage.submitOneItem(item)
     }
 
     checkAllFilter(count: number){
@@ -57,25 +34,12 @@ export class PageManager{
         return this.todoPage.checkCompletedFilter()
     }
 
-    async submitMultipleItems(taskList) {
-        for (const task of taskList) {
-            await this.submitOneItem(task);
-        }
+    submitMultipleItems(taskList) {
+        return this.todoPage.submitMultipleItems(taskList)
     }   
 
-    async checkAllBoxesToBeChecked(){
-        const allBoxes = this.checkButton
-        for(const box of await allBoxes.all()){
-            await box.check({force:true})
-            expect(await box.isChecked()).toBeTruthy()
-          }
-          const count = await this.toDoItem.count();
-
-        for (let i = 0; i < count; i++) {
-            const item = this.toDoItem.nth(i);
-            await expect(item).toContainClass('completed');
-        }
-
+    checkAllBoxesToBeChecked(){
+        return this.todoPage.checkAllBoxesToBeChecked()
     }
 
     
